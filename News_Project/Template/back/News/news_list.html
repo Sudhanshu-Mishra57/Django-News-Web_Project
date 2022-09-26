@@ -1,0 +1,75 @@
+{% extends 'back/main.html' %}
+{% load static %}
+
+{% block main %}
+<!-- Page content -->
+<div id="page-content">
+    <!-- Datatables Header -->
+    <div class="content-header">
+        <div class="header-section">
+            <h1>
+                <i class="fa fa-table"></i>News List<br><small>You can Add, Edit and Delete Data</small>
+            </h1>
+        </div>
+    </div>
+    <ul class="breadcrumb breadcrumb-top">
+        <li>News</li>
+        <li><a href="/panel/news/list">List</a></li>
+    </ul>
+    <!-- END Datatables Header -->
+
+    <!-- Datatables Content -->
+    <div class="block full">
+        <div class="block-title">
+            <h2><strong>News</strong> List</h2>
+        </div>
+
+        <div class="table-responsive">
+            <table id="example-datatable" class="table table-vcenter table-condensed table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center">ID</th>
+                        <th class="text-center"><i class="gi gi-user"></i></th>
+                        <th class="text-center">Title</th>
+                        <th class="text-center">Cat | Sub_Cat</th>
+                        <th class="text-center">Writer</th>
+                        <th class="text-center">Added Date</th>
+                        <th class="text-center">Views</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for i in news_list %}
+                    <tr>
+                        <td class="text-center">{{i.pk}}</td>
+                        <td class="text-center"><img style="display: inline-block; width:50px; height:50px; " src="{{i.Image}}" alt="avatar"
+                                class="img-circle"></td>
+                        <td class="text-center"><a href="javascript:void(0)">{{i.Title}}</a></td>
+                        <td class="text-center">{{i.Category}} | {{ i.Sub_Category }}</td>
+                        <td class="text-center">{{i.Author}}</td>
+                        <td class="text-center">{{i.Added_date}}</td>
+                        <td class="text-center"><span class="label label-info">100</span></td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <a href="{% url 'news_edit' pk=i.pk %}" data-toggle="tooltip" title="Edit"
+                                    class="btn btn-xs btn-default"><i class="fa fa-pencil"> Edit</i></a>
+                                <a href="{% url 'news_delete' pk=i.pk %}" data-toggle="tooltip" title="Delete"
+                                    class="btn btn-xs btn-danger"><i class="fa fa-times"> Delete</i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- END Datatables Content -->
+</div>
+<!-- END Page Content -->
+{% endblock main %}
+{% block footerblock %}
+<!-- Load and execute javascript code used only in this page -->
+<script src="{% static 'Back/js/pages/tablesDatatables.js' %} "></script>
+<script>$(function () { TablesDatatables.init(); });</script>
+{% endblock footerblock %}
